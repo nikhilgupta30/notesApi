@@ -42,16 +42,16 @@ const handleEdit = (req,res,db) => {
 }
 
 const handleDelete = (req,res,db) => {
-	const { id } = req.params;
-	db.select('*').from('users').where({id})
-		.then(user => {
-			if(user.length){
-				res.json(user[0]);
+	const { id } = req.body;
+	db('note').where({id}).del()
+		.then(status => {
+			if(status){
+				res.status(400).json('note deleted');
 			}else{
-				res.status(404).json('not found');
+				res.status(400).json('no note found');
 			}
 		})
-		.catch(err => res.status(400).json('error getting user'))
+		.catch(err => res.status(400).json('error getting note'))
 }
 
 module.exports = {
