@@ -22,7 +22,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/', (req,res) => { res.send('its working') })
+app.get('/', (req,res) => { res.send('it is working') })
 
 app.post('/signin', (req,res) => { signin.handleSignIn(req,res,db,bcrypt) })
 
@@ -30,7 +30,7 @@ app.post('/register', (req,res) => { register.handleRegister(req,res,db,bcrypt) 
 
 app.get('/profile/:id', (req,res) => { profile.handleProfile(req,res,db) })
 
-app.get('/notes', (req,res) => { notes.handleNotes(req,res,db) })
+app.post('/notes', (req,res) => { notes.handleNotes(req,res,db) })
 
 app.post('/add', (req,res) => { notes.handleAdd(req,res,db) })
 
@@ -44,7 +44,6 @@ app.listen(3000, () => {
 
 
 /**
-
 routes
 
 / --> res = this is working
@@ -58,4 +57,21 @@ routes
 
  */
 
+ /**
+database
+
+user(
+    id int autoincrement, 
+    hash varchar(100),
+    email text, 
+    name text)
+
+note(
+    id int autoincrement, 
+    title text not null
+    note text,
+    email text, 
+    created date)
+
+  */
  
