@@ -29,16 +29,20 @@ const handleAdd = (req,res,db) => {
 }
 
 const handleEdit = (req,res,db) => {
-	const { id } = req.params;
-	db.select('*').from('users').where({id})
-		.then(user => {
-			if(user.length){
-				res.json(user[0]);
-			}else{
-				res.status(404).json('not found');
-			}
+	const { id, title, note } = req.body;
+	db('note')
+		.where('id', '=', id)
+		.update({
+			title: title,
+			note: note
 		})
-		.catch(err => res.status(400).json('error getting user'))
+		.then(status => {
+			if(!status){
+				res.status(400).json('no note found');
+			}})
+		.catch(err => res.status(400).json('error getting note'))
+
+		handleNotes(req,res,db);
 }
 
 const handleDelete = (req,res,db) => {
