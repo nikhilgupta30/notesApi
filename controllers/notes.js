@@ -50,7 +50,7 @@ const handleDelete = (req,res,db) => {
 	db('note').where({id}).del()
 		.then(status => {
 			if(status){
-				res.status(400).json('note deleted');
+				res.status(200).json('note deleted');
 			}else{
 				res.status(400).json('no note found');
 			}
